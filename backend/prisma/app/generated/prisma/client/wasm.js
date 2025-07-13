@@ -120,9 +120,121 @@ exports.Prisma.TransactionIsolationLevel = makeStrictEnum({
   Serializable: 'Serializable'
 });
 
+exports.Prisma.UserScalarFieldEnum = {
+  id: 'id',
+  email: 'email',
+  password: 'password',
+  displayName: 'displayName',
+  photoUrl: 'photoUrl',
+  role: 'role',
+  creationDate: 'creationDate',
+  lastSeenAt: 'lastSeenAt'
+};
+
+exports.Prisma.GlobalMessageScalarFieldEnum = {
+  id: 'id',
+  authorId: 'authorId',
+  content: 'content',
+  photoUrl: 'photoUrl',
+  type: 'type',
+  createdAt: 'createdAt',
+  deleted: 'deleted'
+};
+
+exports.Prisma.FriendsScalarFieldEnum = {
+  userId: 'userId',
+  friendId: 'friendId',
+  friendsSince: 'friendsSince'
+};
+
+exports.Prisma.FriendRequestScalarFieldEnum = {
+  id: 'id',
+  requestFromId: 'requestFromId',
+  requestToId: 'requestToId',
+  requestedAt: 'requestedAt'
+};
+
+exports.Prisma.BlockListScalarFieldEnum = {
+  userId: 'userId',
+  blockedUserId: 'blockedUserId',
+  blockedAt: 'blockedAt'
+};
+
+exports.Prisma.GroupChatScalarFieldEnum = {
+  id: 'id',
+  groupName: 'groupName',
+  groupPhoto: 'groupPhoto',
+  createdById: 'createdById',
+  createdAt: 'createdAt'
+};
+
+exports.Prisma.GroupMemberScalarFieldEnum = {
+  groupId: 'groupId',
+  userId: 'userId',
+  isAdmin: 'isAdmin',
+  joinedAt: 'joinedAt'
+};
+
+exports.Prisma.GroupJoinRequestScalarFieldEnum = {
+  id: 'id',
+  groupId: 'groupId',
+  fromUserId: 'fromUserId',
+  toUserId: 'toUserId',
+  requestedAt: 'requestedAt'
+};
+
+exports.Prisma.GroupMessageScalarFieldEnum = {
+  id: 'id',
+  groupId: 'groupId',
+  authorId: 'authorId',
+  content: 'content',
+  photoUrl: 'photoUrl',
+  type: 'type',
+  createdAt: 'createdAt',
+  deleted: 'deleted'
+};
+
+exports.Prisma.PrivateMessageScalarFieldEnum = {
+  id: 'id',
+  fromUserId: 'fromUserId',
+  toUserId: 'toUserId',
+  content: 'content',
+  photoUrl: 'photoUrl',
+  type: 'type',
+  createdAt: 'createdAt',
+  deleted: 'deleted'
+};
+
+exports.Prisma.SortOrder = {
+  asc: 'asc',
+  desc: 'desc'
+};
+
+exports.Prisma.QueryMode = {
+  default: 'default',
+  insensitive: 'insensitive'
+};
+
+exports.Prisma.NullsOrder = {
+  first: 'first',
+  last: 'last'
+};
+exports.Role = exports.$Enums.Role = {
+  GUEST: 'GUEST',
+  USER: 'USER'
+};
 
 exports.Prisma.ModelName = {
-
+  User: 'User',
+  GlobalMessage: 'GlobalMessage',
+  Friends: 'Friends',
+  FriendRequest: 'FriendRequest',
+  BlockList: 'BlockList',
+  GroupChat: 'GroupChat',
+  GroupMember: 'GroupMember',
+  GroupJoinRequest: 'GroupJoinRequest',
+  GroupMessage: 'GroupMessage',
+  PrivateMessage: 'PrivateMessage'
 };
 
 /**
