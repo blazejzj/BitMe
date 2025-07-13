@@ -1,3 +1,4 @@
+export {};
 const { Router } = require("express");
 const authRouter = Router();
 const {
@@ -7,4 +8,4 @@ const {
 
 // authRouter.post("/register", isNotLoggedIn, authController.registerNewUser);
 
-export default authRouter;
+module.exports = authRouter;
