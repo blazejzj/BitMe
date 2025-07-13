@@ -1,23 +1,18 @@
-import express from "express";
-import session from "express-session";
-import cors from "cors";
-import cookieParser from "cookie-parser";
-import dotenv from "dotenv";
+const express = require("express");
+const cors = require("cors");
 
-// dotenv
-dotenv.config();
+require("dotenv").config();
 
 const app = express();
-app.use(
-    cors({
-        origin: process.env.CORS_ORIGIN,
-        credentials: true,
-    })
-);
-
+const corsOptions = {
+    origin: process.env.CORS_ORIGIN,
+    optionsSuccessStatus: 200,
+    credentials: true,
+};
+app.use(cors(corsOptions));
 app.use(express.json());
 
-const PORT = process.env.PORT || 4000;
-app.listen(PORT, () => {
-    console.log("Server running!");
+const port = process.env.PORT;
+app.listen(port, () => {
+    console.log("Server is running!");
 });
