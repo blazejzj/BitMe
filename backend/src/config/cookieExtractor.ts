@@ -1,9 +1,14 @@
-const cookieExtractor = function (req: any) {
-    let token = null;
-    if (req && req.cookies) {
-        token = req.cookies["token"];
-    }
-    return token;
+import { Request } from "express";
+
+interface RequestWithCookies extends Request {
+    cookies: {
+        [key: string]: any;
+        token?: string;
+    };
+}
+
+const cookieExtractor = (req: RequestWithCookies): string | null => {
+    return req.cookies?.token || null;
 };
 
 export default cookieExtractor;

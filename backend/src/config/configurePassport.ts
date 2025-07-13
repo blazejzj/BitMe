@@ -1,3 +1,5 @@
+import { VerifiedCallback } from "passport-jwt";
+
 const cookieExtractor = require("./cookieExtractor");
 const JwtStrategy = require("passport-jwt").Strategy;
 const ExtractJwt = require("passport-jwt").ExtractJwt;
@@ -13,8 +15,10 @@ const options = {
 
 function configurePassport(passport: any) {
     passport.use(
-        new JwtStrategy(options),
-        async function (jwt_payload: any, done: any) {
+        new JwtStrategy(options, async function (
+            jwt_payload: any,
+            done: VerifiedCallback
+        ) {
             try {
                 const user = await db.getUserById(jwt_payload.id);
                 if (!user) {
@@ -24,7 +28,7 @@ function configurePassport(passport: any) {
             } catch (err) {
                 return done(err, false);
             }
-        }
+        })
     );
 }
 
