@@ -1,6 +1,9 @@
 const express = require("express");
 const cors = require("cors");
 const passport = require("passport");
+const cookieParser = require("cookie-parser");
+const passportConfig = require("./config/configurePassport");
+const authRouter = require("./routers/authRouter");
 
 require("dotenv").config();
 
@@ -8,11 +11,9 @@ require("dotenv").config();
 const app = express();
 
 // cookies
-const cookieParser = require("cookie-parser");
 app.use(cookieParser());
 
 // passportjs
-const passportConfig = require("./config/configurePassport");
 passportConfig(passport);
 
 // cors
@@ -22,11 +23,12 @@ const corsOptions = {
     credentials: true,
 };
 app.use(cors(corsOptions));
+
 // use json requests
 app.use(express.json());
 
 // routers
-// xx
+app.use("/api/auth", authRouter);
 
 // listen
 const port = process.env.PORT;

@@ -8,7 +8,7 @@ interface AuthenticateRequest extends Request {
 
 const authenticateJWT = passport.authenticate("jwt", { session: false });
 
-function isLoggedIn(
+function isNotLoggedIn(
     req: AuthenticateRequest,
     res: Response,
     next: NextFunction
@@ -22,4 +22,4 @@ function isLoggedIn(
     next();
 }
 
-module.exports = { authenticateJWT, isLoggedIn };
+module.exports = { authenticateJWT, isNotLoggedIn };
