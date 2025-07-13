@@ -10,6 +10,9 @@ require("dotenv").config();
 // server
 const app = express();
 
+// use json requests
+app.use(express.json());
+
 // cookies
 app.use(cookieParser());
 
@@ -23,9 +26,6 @@ const corsOptions = {
     credentials: true,
 };
 app.use(cors(corsOptions));
-
-// use json requests
-app.use(express.json());
 
 // routers
 app.use("/api/auth", authRouter);

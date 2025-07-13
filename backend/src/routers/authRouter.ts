@@ -5,7 +5,8 @@ const {
     isNotLoggedIn,
     authenticateJWT,
 } = require("../middleware/authMiddleware");
+const authController = require("../controllers/authController");
 
-// authRouter.post("/register", isNotLoggedIn, authController.registerNewUser);
+authRouter.post("/register", isNotLoggedIn, authController.registerUser);
 
 module.exports = authRouter;
