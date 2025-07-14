@@ -15,4 +15,40 @@ async function getUserById(id: string) {
     return user;
 }
 
-module.exports = { getUserByEmail, getUserById };
+async function registerUser(
+    email: string,
+    password: string,
+    username: string,
+    displayName: string,
+    photoUrl: string
+) {
+    return prisma.user.create({
+        data: { email, password, username, displayName, photoUrl },
+    });
+}
+
+async function registerGuest(
+    email: string,
+    password: string,
+    username: string,
+    displayName: string,
+    photoUrl: string,
+    role: string,
+    creationDate: Date,
+    lastSeenAt: Date
+) {
+    return prisma.user.create({
+        data: {
+            email,
+            password,
+            username,
+            displayName,
+            photoUrl,
+            role,
+            creationDate,
+            lastSeenAt,
+        },
+    });
+}
+
+module.exports = { getUserByEmail, getUserById, registerGuest, registerUser };
