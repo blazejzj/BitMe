@@ -1,3 +1,5 @@
+import { randomUUID } from "crypto";
+
 const db = require("../db/queries");
 const jwt = require("jsonwebtoken");
 const bcrypt = require("bcryptjs");
@@ -14,6 +16,31 @@ exports.registerUser = async (req: any, res: any) => {
     await db.registerUser(email, hashedPassword, displayName, photoUrl);
 
     res.status(200).json({ message: "Successfully registered." });
+};
+
+exports.loginGuest = async (req: any, res: any) => {
+    // we're not saving to database, we only give guest the cookie
+    const payload = {
+        id: randomUUID(),
+        role: "GUEST",
+        creationDate: Date.now(),
+        lastSeenAt: Date.now(),
+    };
+
+    const token = jwt.sign(payload, process.env.JWT_SECRET, {
+        expiresIn: "24h",
+    });
+
+    res.cookie("token", token, {
+        httpOnly: true,
+        sameSite: true,
+        secure: false,
+        maxAge: 3600000,
+    });
+
+    res.status(200).json({
+        message: "Successfully logged in as guest.",
+    });
 };
 
 exports.login = async (req: any, res: any) => {
@@ -37,7 +64,7 @@ exports.login = async (req: any, res: any) => {
     };
 
     const token = jwt.sign(payload, process.env.JWT_SECRET, {
-        exp: "1h",
+        expiresIn: "1h",
     });
 
     // set cookie with the token we generated here
@@ -48,7 +75,7 @@ exports.login = async (req: any, res: any) => {
         sameSite: "strict",
     });
 
-    res.status().json({
+    res.status(200).json({
         message: "Login successfull",
     });
 };
