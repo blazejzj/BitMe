@@ -17,6 +17,6 @@ authRouter.post("/login", isNotLoggedIn, authController.login);
 authRouter.post("/login/guest", isNotLoggedIn, authController.loginGuest);
 
 // logout (guest and user mode (when you're guest you can't relog))
-authRouter.post("/logout", authenticateJWT, authController.logout);
+authRouter.post("/logout", authenticateJWT, authController.logOut);
 
 module.exports = authRouter;

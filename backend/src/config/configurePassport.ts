@@ -1,9 +1,9 @@
 import { VerifiedCallback } from "passport-jwt";
 
-const cookieExtractor = require("./cookieExtractor");
+const cookieExtractor = require("./cookieExtractor").default;
 const JwtStrategy = require("passport-jwt").Strategy;
 const ExtractJwt = require("passport-jwt").ExtractJwt;
-const db = require("../db/prisma");
+const db = require("../db/index");
 
 const options = {
     secretOrKey: process.env.JWT_SECRET,
@@ -20,7 +20,7 @@ function configurePassport(passport: any) {
             done: VerifiedCallback
         ) {
             try {
-                const user = await db.getUserById(jwt_payload.id);
+                const user = await db.user.getUserById(jwt_payload.id);
                 if (!user) {
                     return done(null, false);
                 }

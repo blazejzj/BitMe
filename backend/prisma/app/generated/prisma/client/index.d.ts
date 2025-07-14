@@ -1916,6 +1916,7 @@ export namespace Prisma {
     email: string | null
     password: string | null
     displayName: string | null
+    username: string | null
     photoUrl: string | null
     role: $Enums.Role | null
     creationDate: Date | null
@@ -1927,6 +1928,7 @@ export namespace Prisma {
     email: string | null
     password: string | null
     displayName: string | null
+    username: string | null
     photoUrl: string | null
     role: $Enums.Role | null
     creationDate: Date | null
@@ -1938,6 +1940,7 @@ export namespace Prisma {
     email: number
     password: number
     displayName: number
+    username: number
     photoUrl: number
     role: number
     creationDate: number
@@ -1951,6 +1954,7 @@ export namespace Prisma {
     email?: true
     password?: true
     displayName?: true
+    username?: true
     photoUrl?: true
     role?: true
     creationDate?: true
@@ -1962,6 +1966,7 @@ export namespace Prisma {
     email?: true
     password?: true
     displayName?: true
+    username?: true
     photoUrl?: true
     role?: true
     creationDate?: true
@@ -1973,6 +1978,7 @@ export namespace Prisma {
     email?: true
     password?: true
     displayName?: true
+    username?: true
     photoUrl?: true
     role?: true
     creationDate?: true
@@ -2057,6 +2063,7 @@ export namespace Prisma {
     email: string
     password: string
     displayName: string
+    username: string
     photoUrl: string | null
     role: $Enums.Role
     creationDate: Date
@@ -2085,6 +2092,7 @@ export namespace Prisma {
     email?: boolean
     password?: boolean
     displayName?: boolean
+    username?: boolean
     photoUrl?: boolean
     role?: boolean
     creationDate?: boolean
@@ -2111,6 +2119,7 @@ export namespace Prisma {
     email?: boolean
     password?: boolean
     displayName?: boolean
+    username?: boolean
     photoUrl?: boolean
     role?: boolean
     creationDate?: boolean
@@ -2122,6 +2131,7 @@ export namespace Prisma {
     email?: boolean
     password?: boolean
     displayName?: boolean
+    username?: boolean
     photoUrl?: boolean
     role?: boolean
     creationDate?: boolean
@@ -2133,13 +2143,14 @@ export namespace Prisma {
     email?: boolean
     password?: boolean
     displayName?: boolean
+    username?: boolean
     photoUrl?: boolean
     role?: boolean
     creationDate?: boolean
     lastSeenAt?: boolean
   }
 
-  export type UserOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "email" | "password" | "displayName" | "photoUrl" | "role" | "creationDate" | "lastSeenAt", ExtArgs["result"]["user"]>
+  export type UserOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "email" | "password" | "displayName" | "username" | "photoUrl" | "role" | "creationDate" | "lastSeenAt", ExtArgs["result"]["user"]>
   export type UserInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     globalMessages?: boolean | User$globalMessagesArgs<ExtArgs>
     friends?: boolean | User$friendsArgs<ExtArgs>
@@ -2183,6 +2194,7 @@ export namespace Prisma {
       email: string
       password: string
       displayName: string
+      username: string
       photoUrl: string | null
       role: $Enums.Role
       creationDate: Date
@@ -2628,6 +2640,7 @@ export namespace Prisma {
     readonly email: FieldRef<"User", 'String'>
     readonly password: FieldRef<"User", 'String'>
     readonly displayName: FieldRef<"User", 'String'>
+    readonly username: FieldRef<"User", 'String'>
     readonly photoUrl: FieldRef<"User", 'String'>
     readonly role: FieldRef<"User", 'Role'>
     readonly creationDate: FieldRef<"User", 'DateTime'>
@@ -13091,6 +13104,7 @@ export namespace Prisma {
     email: 'email',
     password: 'password',
     displayName: 'displayName',
+    username: 'username',
     photoUrl: 'photoUrl',
     role: 'role',
     creationDate: 'creationDate',
@@ -13304,6 +13318,7 @@ export namespace Prisma {
     email?: StringFilter<"User"> | string
     password?: StringFilter<"User"> | string
     displayName?: StringFilter<"User"> | string
+    username?: StringFilter<"User"> | string
     photoUrl?: StringNullableFilter<"User"> | string | null
     role?: EnumRoleFilter<"User"> | $Enums.Role
     creationDate?: DateTimeFilter<"User"> | Date | string
@@ -13329,6 +13344,7 @@ export namespace Prisma {
     email?: SortOrder
     password?: SortOrder
     displayName?: SortOrder
+    username?: SortOrder
     photoUrl?: SortOrderInput | SortOrder
     role?: SortOrder
     creationDate?: SortOrder
@@ -13352,6 +13368,7 @@ export namespace Prisma {
   export type UserWhereUniqueInput = Prisma.AtLeast<{
     id?: string
     email?: string
+    username?: string
     AND?: UserWhereInput | UserWhereInput[]
     OR?: UserWhereInput[]
     NOT?: UserWhereInput | UserWhereInput[]
@@ -13375,13 +13392,14 @@ export namespace Prisma {
     groupMessages?: GroupMessageListRelationFilter
     privateMessagesSent?: PrivateMessageListRelationFilter
     privateMessagesReceived?: PrivateMessageListRelationFilter
-  }, "id" | "email">
+  }, "id" | "email" | "username">
 
   export type UserOrderByWithAggregationInput = {
     id?: SortOrder
     email?: SortOrder
     password?: SortOrder
     displayName?: SortOrder
+    username?: SortOrder
     photoUrl?: SortOrderInput | SortOrder
     role?: SortOrder
     creationDate?: SortOrder
@@ -13399,6 +13417,7 @@ export namespace Prisma {
     email?: StringWithAggregatesFilter<"User"> | string
     password?: StringWithAggregatesFilter<"User"> | string
     displayName?: StringWithAggregatesFilter<"User"> | string
+    username?: StringWithAggregatesFilter<"User"> | string
     photoUrl?: StringNullableWithAggregatesFilter<"User"> | string | null
     role?: EnumRoleWithAggregatesFilter<"User"> | $Enums.Role
     creationDate?: DateTimeWithAggregatesFilter<"User"> | Date | string
@@ -13951,6 +13970,7 @@ export namespace Prisma {
     email: string
     password: string
     displayName: string
+    username: string
     photoUrl?: string | null
     role?: $Enums.Role
     creationDate?: Date | string
@@ -13976,6 +13996,7 @@ export namespace Prisma {
     email: string
     password: string
     displayName: string
+    username: string
     photoUrl?: string | null
     role?: $Enums.Role
     creationDate?: Date | string
@@ -14001,6 +14022,7 @@ export namespace Prisma {
     email?: StringFieldUpdateOperationsInput | string
     password?: StringFieldUpdateOperationsInput | string
     displayName?: StringFieldUpdateOperationsInput | string
+    username?: StringFieldUpdateOperationsInput | string
     photoUrl?: NullableStringFieldUpdateOperationsInput | string | null
     role?: EnumRoleFieldUpdateOperationsInput | $Enums.Role
     creationDate?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -14026,6 +14048,7 @@ export namespace Prisma {
     email?: StringFieldUpdateOperationsInput | string
     password?: StringFieldUpdateOperationsInput | string
     displayName?: StringFieldUpdateOperationsInput | string
+    username?: StringFieldUpdateOperationsInput | string
     photoUrl?: NullableStringFieldUpdateOperationsInput | string | null
     role?: EnumRoleFieldUpdateOperationsInput | $Enums.Role
     creationDate?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -14051,6 +14074,7 @@ export namespace Prisma {
     email: string
     password: string
     displayName: string
+    username: string
     photoUrl?: string | null
     role?: $Enums.Role
     creationDate?: Date | string
@@ -14062,6 +14086,7 @@ export namespace Prisma {
     email?: StringFieldUpdateOperationsInput | string
     password?: StringFieldUpdateOperationsInput | string
     displayName?: StringFieldUpdateOperationsInput | string
+    username?: StringFieldUpdateOperationsInput | string
     photoUrl?: NullableStringFieldUpdateOperationsInput | string | null
     role?: EnumRoleFieldUpdateOperationsInput | $Enums.Role
     creationDate?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -14073,6 +14098,7 @@ export namespace Prisma {
     email?: StringFieldUpdateOperationsInput | string
     password?: StringFieldUpdateOperationsInput | string
     displayName?: StringFieldUpdateOperationsInput | string
+    username?: StringFieldUpdateOperationsInput | string
     photoUrl?: NullableStringFieldUpdateOperationsInput | string | null
     role?: EnumRoleFieldUpdateOperationsInput | $Enums.Role
     creationDate?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -14740,6 +14766,7 @@ export namespace Prisma {
     email?: SortOrder
     password?: SortOrder
     displayName?: SortOrder
+    username?: SortOrder
     photoUrl?: SortOrder
     role?: SortOrder
     creationDate?: SortOrder
@@ -14751,6 +14778,7 @@ export namespace Prisma {
     email?: SortOrder
     password?: SortOrder
     displayName?: SortOrder
+    username?: SortOrder
     photoUrl?: SortOrder
     role?: SortOrder
     creationDate?: SortOrder
@@ -14762,6 +14790,7 @@ export namespace Prisma {
     email?: SortOrder
     password?: SortOrder
     displayName?: SortOrder
+    username?: SortOrder
     photoUrl?: SortOrder
     role?: SortOrder
     creationDate?: SortOrder
@@ -16871,6 +16900,7 @@ export namespace Prisma {
     email: string
     password: string
     displayName: string
+    username: string
     photoUrl?: string | null
     role?: $Enums.Role
     creationDate?: Date | string
@@ -16895,6 +16925,7 @@ export namespace Prisma {
     email: string
     password: string
     displayName: string
+    username: string
     photoUrl?: string | null
     role?: $Enums.Role
     creationDate?: Date | string
@@ -16935,6 +16966,7 @@ export namespace Prisma {
     email?: StringFieldUpdateOperationsInput | string
     password?: StringFieldUpdateOperationsInput | string
     displayName?: StringFieldUpdateOperationsInput | string
+    username?: StringFieldUpdateOperationsInput | string
     photoUrl?: NullableStringFieldUpdateOperationsInput | string | null
     role?: EnumRoleFieldUpdateOperationsInput | $Enums.Role
     creationDate?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -16959,6 +16991,7 @@ export namespace Prisma {
     email?: StringFieldUpdateOperationsInput | string
     password?: StringFieldUpdateOperationsInput | string
     displayName?: StringFieldUpdateOperationsInput | string
+    username?: StringFieldUpdateOperationsInput | string
     photoUrl?: NullableStringFieldUpdateOperationsInput | string | null
     role?: EnumRoleFieldUpdateOperationsInput | $Enums.Role
     creationDate?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -16983,6 +17016,7 @@ export namespace Prisma {
     email: string
     password: string
     displayName: string
+    username: string
     photoUrl?: string | null
     role?: $Enums.Role
     creationDate?: Date | string
@@ -17007,6 +17041,7 @@ export namespace Prisma {
     email: string
     password: string
     displayName: string
+    username: string
     photoUrl?: string | null
     role?: $Enums.Role
     creationDate?: Date | string
@@ -17036,6 +17071,7 @@ export namespace Prisma {
     email: string
     password: string
     displayName: string
+    username: string
     photoUrl?: string | null
     role?: $Enums.Role
     creationDate?: Date | string
@@ -17060,6 +17096,7 @@ export namespace Prisma {
     email: string
     password: string
     displayName: string
+    username: string
     photoUrl?: string | null
     role?: $Enums.Role
     creationDate?: Date | string
@@ -17100,6 +17137,7 @@ export namespace Prisma {
     email?: StringFieldUpdateOperationsInput | string
     password?: StringFieldUpdateOperationsInput | string
     displayName?: StringFieldUpdateOperationsInput | string
+    username?: StringFieldUpdateOperationsInput | string
     photoUrl?: NullableStringFieldUpdateOperationsInput | string | null
     role?: EnumRoleFieldUpdateOperationsInput | $Enums.Role
     creationDate?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -17124,6 +17162,7 @@ export namespace Prisma {
     email?: StringFieldUpdateOperationsInput | string
     password?: StringFieldUpdateOperationsInput | string
     displayName?: StringFieldUpdateOperationsInput | string
+    username?: StringFieldUpdateOperationsInput | string
     photoUrl?: NullableStringFieldUpdateOperationsInput | string | null
     role?: EnumRoleFieldUpdateOperationsInput | $Enums.Role
     creationDate?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -17159,6 +17198,7 @@ export namespace Prisma {
     email?: StringFieldUpdateOperationsInput | string
     password?: StringFieldUpdateOperationsInput | string
     displayName?: StringFieldUpdateOperationsInput | string
+    username?: StringFieldUpdateOperationsInput | string
     photoUrl?: NullableStringFieldUpdateOperationsInput | string | null
     role?: EnumRoleFieldUpdateOperationsInput | $Enums.Role
     creationDate?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -17183,6 +17223,7 @@ export namespace Prisma {
     email?: StringFieldUpdateOperationsInput | string
     password?: StringFieldUpdateOperationsInput | string
     displayName?: StringFieldUpdateOperationsInput | string
+    username?: StringFieldUpdateOperationsInput | string
     photoUrl?: NullableStringFieldUpdateOperationsInput | string | null
     role?: EnumRoleFieldUpdateOperationsInput | $Enums.Role
     creationDate?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -17207,6 +17248,7 @@ export namespace Prisma {
     email: string
     password: string
     displayName: string
+    username: string
     photoUrl?: string | null
     role?: $Enums.Role
     creationDate?: Date | string
@@ -17231,6 +17273,7 @@ export namespace Prisma {
     email: string
     password: string
     displayName: string
+    username: string
     photoUrl?: string | null
     role?: $Enums.Role
     creationDate?: Date | string
@@ -17260,6 +17303,7 @@ export namespace Prisma {
     email: string
     password: string
     displayName: string
+    username: string
     photoUrl?: string | null
     role?: $Enums.Role
     creationDate?: Date | string
@@ -17284,6 +17328,7 @@ export namespace Prisma {
     email: string
     password: string
     displayName: string
+    username: string
     photoUrl?: string | null
     role?: $Enums.Role
     creationDate?: Date | string
@@ -17324,6 +17369,7 @@ export namespace Prisma {
     email?: StringFieldUpdateOperationsInput | string
     password?: StringFieldUpdateOperationsInput | string
     displayName?: StringFieldUpdateOperationsInput | string
+    username?: StringFieldUpdateOperationsInput | string
     photoUrl?: NullableStringFieldUpdateOperationsInput | string | null
     role?: EnumRoleFieldUpdateOperationsInput | $Enums.Role
     creationDate?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -17348,6 +17394,7 @@ export namespace Prisma {
     email?: StringFieldUpdateOperationsInput | string
     password?: StringFieldUpdateOperationsInput | string
     displayName?: StringFieldUpdateOperationsInput | string
+    username?: StringFieldUpdateOperationsInput | string
     photoUrl?: NullableStringFieldUpdateOperationsInput | string | null
     role?: EnumRoleFieldUpdateOperationsInput | $Enums.Role
     creationDate?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -17383,6 +17430,7 @@ export namespace Prisma {
     email?: StringFieldUpdateOperationsInput | string
     password?: StringFieldUpdateOperationsInput | string
     displayName?: StringFieldUpdateOperationsInput | string
+    username?: StringFieldUpdateOperationsInput | string
     photoUrl?: NullableStringFieldUpdateOperationsInput | string | null
     role?: EnumRoleFieldUpdateOperationsInput | $Enums.Role
     creationDate?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -17407,6 +17455,7 @@ export namespace Prisma {
     email?: StringFieldUpdateOperationsInput | string
     password?: StringFieldUpdateOperationsInput | string
     displayName?: StringFieldUpdateOperationsInput | string
+    username?: StringFieldUpdateOperationsInput | string
     photoUrl?: NullableStringFieldUpdateOperationsInput | string | null
     role?: EnumRoleFieldUpdateOperationsInput | $Enums.Role
     creationDate?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -17431,6 +17480,7 @@ export namespace Prisma {
     email: string
     password: string
     displayName: string
+    username: string
     photoUrl?: string | null
     role?: $Enums.Role
     creationDate?: Date | string
@@ -17455,6 +17505,7 @@ export namespace Prisma {
     email: string
     password: string
     displayName: string
+    username: string
     photoUrl?: string | null
     role?: $Enums.Role
     creationDate?: Date | string
@@ -17484,6 +17535,7 @@ export namespace Prisma {
     email: string
     password: string
     displayName: string
+    username: string
     photoUrl?: string | null
     role?: $Enums.Role
     creationDate?: Date | string
@@ -17508,6 +17560,7 @@ export namespace Prisma {
     email: string
     password: string
     displayName: string
+    username: string
     photoUrl?: string | null
     role?: $Enums.Role
     creationDate?: Date | string
@@ -17548,6 +17601,7 @@ export namespace Prisma {
     email?: StringFieldUpdateOperationsInput | string
     password?: StringFieldUpdateOperationsInput | string
     displayName?: StringFieldUpdateOperationsInput | string
+    username?: StringFieldUpdateOperationsInput | string
     photoUrl?: NullableStringFieldUpdateOperationsInput | string | null
     role?: EnumRoleFieldUpdateOperationsInput | $Enums.Role
     creationDate?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -17572,6 +17626,7 @@ export namespace Prisma {
     email?: StringFieldUpdateOperationsInput | string
     password?: StringFieldUpdateOperationsInput | string
     displayName?: StringFieldUpdateOperationsInput | string
+    username?: StringFieldUpdateOperationsInput | string
     photoUrl?: NullableStringFieldUpdateOperationsInput | string | null
     role?: EnumRoleFieldUpdateOperationsInput | $Enums.Role
     creationDate?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -17607,6 +17662,7 @@ export namespace Prisma {
     email?: StringFieldUpdateOperationsInput | string
     password?: StringFieldUpdateOperationsInput | string
     displayName?: StringFieldUpdateOperationsInput | string
+    username?: StringFieldUpdateOperationsInput | string
     photoUrl?: NullableStringFieldUpdateOperationsInput | string | null
     role?: EnumRoleFieldUpdateOperationsInput | $Enums.Role
     creationDate?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -17631,6 +17687,7 @@ export namespace Prisma {
     email?: StringFieldUpdateOperationsInput | string
     password?: StringFieldUpdateOperationsInput | string
     displayName?: StringFieldUpdateOperationsInput | string
+    username?: StringFieldUpdateOperationsInput | string
     photoUrl?: NullableStringFieldUpdateOperationsInput | string | null
     role?: EnumRoleFieldUpdateOperationsInput | $Enums.Role
     creationDate?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -17655,6 +17712,7 @@ export namespace Prisma {
     email: string
     password: string
     displayName: string
+    username: string
     photoUrl?: string | null
     role?: $Enums.Role
     creationDate?: Date | string
@@ -17679,6 +17737,7 @@ export namespace Prisma {
     email: string
     password: string
     displayName: string
+    username: string
     photoUrl?: string | null
     role?: $Enums.Role
     creationDate?: Date | string
@@ -17795,6 +17854,7 @@ export namespace Prisma {
     email?: StringFieldUpdateOperationsInput | string
     password?: StringFieldUpdateOperationsInput | string
     displayName?: StringFieldUpdateOperationsInput | string
+    username?: StringFieldUpdateOperationsInput | string
     photoUrl?: NullableStringFieldUpdateOperationsInput | string | null
     role?: EnumRoleFieldUpdateOperationsInput | $Enums.Role
     creationDate?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -17819,6 +17879,7 @@ export namespace Prisma {
     email?: StringFieldUpdateOperationsInput | string
     password?: StringFieldUpdateOperationsInput | string
     displayName?: StringFieldUpdateOperationsInput | string
+    username?: StringFieldUpdateOperationsInput | string
     photoUrl?: NullableStringFieldUpdateOperationsInput | string | null
     role?: EnumRoleFieldUpdateOperationsInput | $Enums.Role
     creationDate?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -17916,6 +17977,7 @@ export namespace Prisma {
     email: string
     password: string
     displayName: string
+    username: string
     photoUrl?: string | null
     role?: $Enums.Role
     creationDate?: Date | string
@@ -17940,6 +18002,7 @@ export namespace Prisma {
     email: string
     password: string
     displayName: string
+    username: string
     photoUrl?: string | null
     role?: $Enums.Role
     creationDate?: Date | string
@@ -18011,6 +18074,7 @@ export namespace Prisma {
     email?: StringFieldUpdateOperationsInput | string
     password?: StringFieldUpdateOperationsInput | string
     displayName?: StringFieldUpdateOperationsInput | string
+    username?: StringFieldUpdateOperationsInput | string
     photoUrl?: NullableStringFieldUpdateOperationsInput | string | null
     role?: EnumRoleFieldUpdateOperationsInput | $Enums.Role
     creationDate?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -18035,6 +18099,7 @@ export namespace Prisma {
     email?: StringFieldUpdateOperationsInput | string
     password?: StringFieldUpdateOperationsInput | string
     displayName?: StringFieldUpdateOperationsInput | string
+    username?: StringFieldUpdateOperationsInput | string
     photoUrl?: NullableStringFieldUpdateOperationsInput | string | null
     role?: EnumRoleFieldUpdateOperationsInput | $Enums.Role
     creationDate?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -18084,6 +18149,7 @@ export namespace Prisma {
     email: string
     password: string
     displayName: string
+    username: string
     photoUrl?: string | null
     role?: $Enums.Role
     creationDate?: Date | string
@@ -18108,6 +18174,7 @@ export namespace Prisma {
     email: string
     password: string
     displayName: string
+    username: string
     photoUrl?: string | null
     role?: $Enums.Role
     creationDate?: Date | string
@@ -18137,6 +18204,7 @@ export namespace Prisma {
     email: string
     password: string
     displayName: string
+    username: string
     photoUrl?: string | null
     role?: $Enums.Role
     creationDate?: Date | string
@@ -18161,6 +18229,7 @@ export namespace Prisma {
     email: string
     password: string
     displayName: string
+    username: string
     photoUrl?: string | null
     role?: $Enums.Role
     creationDate?: Date | string
@@ -18232,6 +18301,7 @@ export namespace Prisma {
     email?: StringFieldUpdateOperationsInput | string
     password?: StringFieldUpdateOperationsInput | string
     displayName?: StringFieldUpdateOperationsInput | string
+    username?: StringFieldUpdateOperationsInput | string
     photoUrl?: NullableStringFieldUpdateOperationsInput | string | null
     role?: EnumRoleFieldUpdateOperationsInput | $Enums.Role
     creationDate?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -18256,6 +18326,7 @@ export namespace Prisma {
     email?: StringFieldUpdateOperationsInput | string
     password?: StringFieldUpdateOperationsInput | string
     displayName?: StringFieldUpdateOperationsInput | string
+    username?: StringFieldUpdateOperationsInput | string
     photoUrl?: NullableStringFieldUpdateOperationsInput | string | null
     role?: EnumRoleFieldUpdateOperationsInput | $Enums.Role
     creationDate?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -18291,6 +18362,7 @@ export namespace Prisma {
     email?: StringFieldUpdateOperationsInput | string
     password?: StringFieldUpdateOperationsInput | string
     displayName?: StringFieldUpdateOperationsInput | string
+    username?: StringFieldUpdateOperationsInput | string
     photoUrl?: NullableStringFieldUpdateOperationsInput | string | null
     role?: EnumRoleFieldUpdateOperationsInput | $Enums.Role
     creationDate?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -18315,6 +18387,7 @@ export namespace Prisma {
     email?: StringFieldUpdateOperationsInput | string
     password?: StringFieldUpdateOperationsInput | string
     displayName?: StringFieldUpdateOperationsInput | string
+    username?: StringFieldUpdateOperationsInput | string
     photoUrl?: NullableStringFieldUpdateOperationsInput | string | null
     role?: EnumRoleFieldUpdateOperationsInput | $Enums.Role
     creationDate?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -18364,6 +18437,7 @@ export namespace Prisma {
     email: string
     password: string
     displayName: string
+    username: string
     photoUrl?: string | null
     role?: $Enums.Role
     creationDate?: Date | string
@@ -18388,6 +18462,7 @@ export namespace Prisma {
     email: string
     password: string
     displayName: string
+    username: string
     photoUrl?: string | null
     role?: $Enums.Role
     creationDate?: Date | string
@@ -18459,6 +18534,7 @@ export namespace Prisma {
     email?: StringFieldUpdateOperationsInput | string
     password?: StringFieldUpdateOperationsInput | string
     displayName?: StringFieldUpdateOperationsInput | string
+    username?: StringFieldUpdateOperationsInput | string
     photoUrl?: NullableStringFieldUpdateOperationsInput | string | null
     role?: EnumRoleFieldUpdateOperationsInput | $Enums.Role
     creationDate?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -18483,6 +18559,7 @@ export namespace Prisma {
     email?: StringFieldUpdateOperationsInput | string
     password?: StringFieldUpdateOperationsInput | string
     displayName?: StringFieldUpdateOperationsInput | string
+    username?: StringFieldUpdateOperationsInput | string
     photoUrl?: NullableStringFieldUpdateOperationsInput | string | null
     role?: EnumRoleFieldUpdateOperationsInput | $Enums.Role
     creationDate?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -18507,6 +18584,7 @@ export namespace Prisma {
     email: string
     password: string
     displayName: string
+    username: string
     photoUrl?: string | null
     role?: $Enums.Role
     creationDate?: Date | string
@@ -18531,6 +18609,7 @@ export namespace Prisma {
     email: string
     password: string
     displayName: string
+    username: string
     photoUrl?: string | null
     role?: $Enums.Role
     creationDate?: Date | string
@@ -18560,6 +18639,7 @@ export namespace Prisma {
     email: string
     password: string
     displayName: string
+    username: string
     photoUrl?: string | null
     role?: $Enums.Role
     creationDate?: Date | string
@@ -18584,6 +18664,7 @@ export namespace Prisma {
     email: string
     password: string
     displayName: string
+    username: string
     photoUrl?: string | null
     role?: $Enums.Role
     creationDate?: Date | string
@@ -18624,6 +18705,7 @@ export namespace Prisma {
     email?: StringFieldUpdateOperationsInput | string
     password?: StringFieldUpdateOperationsInput | string
     displayName?: StringFieldUpdateOperationsInput | string
+    username?: StringFieldUpdateOperationsInput | string
     photoUrl?: NullableStringFieldUpdateOperationsInput | string | null
     role?: EnumRoleFieldUpdateOperationsInput | $Enums.Role
     creationDate?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -18648,6 +18730,7 @@ export namespace Prisma {
     email?: StringFieldUpdateOperationsInput | string
     password?: StringFieldUpdateOperationsInput | string
     displayName?: StringFieldUpdateOperationsInput | string
+    username?: StringFieldUpdateOperationsInput | string
     photoUrl?: NullableStringFieldUpdateOperationsInput | string | null
     role?: EnumRoleFieldUpdateOperationsInput | $Enums.Role
     creationDate?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -18683,6 +18766,7 @@ export namespace Prisma {
     email?: StringFieldUpdateOperationsInput | string
     password?: StringFieldUpdateOperationsInput | string
     displayName?: StringFieldUpdateOperationsInput | string
+    username?: StringFieldUpdateOperationsInput | string
     photoUrl?: NullableStringFieldUpdateOperationsInput | string | null
     role?: EnumRoleFieldUpdateOperationsInput | $Enums.Role
     creationDate?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -18707,6 +18791,7 @@ export namespace Prisma {
     email?: StringFieldUpdateOperationsInput | string
     password?: StringFieldUpdateOperationsInput | string
     displayName?: StringFieldUpdateOperationsInput | string
+    username?: StringFieldUpdateOperationsInput | string
     photoUrl?: NullableStringFieldUpdateOperationsInput | string | null
     role?: EnumRoleFieldUpdateOperationsInput | $Enums.Role
     creationDate?: DateTimeFieldUpdateOperationsInput | Date | string

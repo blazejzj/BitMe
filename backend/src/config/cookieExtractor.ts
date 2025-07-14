@@ -7,8 +7,11 @@ interface RequestWithCookies extends Request {
     };
 }
 
-const cookieExtractor = (req: RequestWithCookies): string | null => {
-    return req.cookies?.token || null;
+const cookieExtractor = function (req: any) {
+    if (req && req.cookies && req.cookies.token) {
+        return req.cookies.token;
+    }
+    return null;
 };
 
 export default cookieExtractor;

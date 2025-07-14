@@ -1,6 +1,7 @@
 generator client {
   provider = "prisma-client-js"
   output   = "app/generated/prisma/client"
+  binaryTargets = ["native", "debian-openssl-3.0.x", "darwin-arm64"]
 }
 
 datasource db {
@@ -14,128 +15,129 @@ enum Role {
 }
 
 model User {
-  id           String     @id @default(uuid())
-  email        String     @unique
-  password     String
-  displayName  String
-  photoUrl     String?
-  role         Role       @default(USER)
-  creationDate DateTime   @default(now())
-  lastSeenAt   DateTime   @default(now())
+  id String @id @default(uuid())
+  email String @unique
+  password String
+  displayName String
+  username String @unique
+  photoUrl String?
+  role Role @default(USER)
+  creationDate DateTime @default(now())
+  lastSeenAt DateTime @default(now())
 
-  globalMessages     GlobalMessage[]  @relation("UserGlobalMessages")
-  friends           Friends[]         @relation("UserFriends")
-  friendOf          Friends[]         @relation("FriendUsers")
-  friendRequests    FriendRequest[]   @relation("UserFriendRequests")
-  receivedRequests  FriendRequest[]   @relation("UserReceivedRequests")
-  blocked          BlockList[]        @relation("UserBlocked")
-  blockedBy        BlockList[]        @relation("BlockedUsers")
-  groupChatsCreated GroupChat[]       @relation("UserGroupChatsCreated")
-  groupMembers      GroupMember[]     @relation("UserGroupMembers")
-  groupJoinRequests GroupJoinRequest[]@relation("UserGroupJoinRequests")
+  globalMessages GlobalMessage[] @relation("UserGlobalMessages")
+  friends Friends[] @relation("UserFriends")
+  friendOf Friends[] @relation("FriendUsers")
+  friendRequests FriendRequest[] @relation("UserFriendRequests")
+  receivedRequests FriendRequest[] @relation("UserReceivedRequests")
+  blocked BlockList[] @relation("UserBlocked")
+  blockedBy BlockList[] @relation("BlockedUsers")
+  groupChatsCreated GroupChat[] @relation("UserGroupChatsCreated")
+  groupMembers  GroupMember[] @relation("UserGroupMembers")
+  groupJoinRequests GroupJoinRequest[] @relation("UserGroupJoinRequests")
   receivedGroupJoinRequests GroupJoinRequest[] @relation("UserReceivedGroupJoinRequests")
-  groupMessages     GroupMessage[]    @relation("UserGroupMessages")
-  privateMessagesSent PrivateMessage[]  @relation("UserPrivateMessagesSent")
+  groupMessages GroupMessage[] @relation("UserGroupMessages")
+  privateMessagesSent PrivateMessage[] @relation("UserPrivateMessagesSent")
   privateMessagesReceived PrivateMessage[] @relation("UserPrivateMessagesReceived")
 }
 
 model GlobalMessage {
-  id        String   @id @default(uuid())
+  id String @id @default(uuid())
   authorId  String
-  author    User     @relation(fields: [authorId], references: [id], name: "UserGlobalMessages")
-  content   String?
-  photoUrl  String?
-  type      String?
+  author User @relation(fields: [authorId], references: [id], name: "UserGlobalMessages")
+  content String?
+  photoUrl String?
+  type String?
   createdAt DateTime @default(now())
-  deleted   Boolean  @default(false)
+  deleted Boolean @default(false)
 }
 
 model Friends {
-  userId    String
-  friendId  String
+  userId String
+  friendId String
   friendsSince DateTime @default(now())
-  user      User    @relation(fields: [userId], references: [id], name: "UserFriends")
-  friend    User    @relation(fields: [friendId], references: [id], name: "FriendUsers")
+  user User @relation(fields: [userId], references: [id], name: "UserFriends")
+  friend User @relation(fields: [friendId], references: [id], name: "FriendUsers")
 
   @@id([userId, friendId])
 }
 
 model FriendRequest {
-  id         String   @id @default(uuid())
+  id String @id @default(uuid())
   requestFromId String
-  requestToId   String
-  requestedAt   DateTime @default(now())
-  requestFrom   User   @relation(fields: [requestFromId], references: [id], name: "UserFriendRequests")
-  requestTo     User   @relation(fields: [requestToId], references: [id], name: "UserReceivedRequests")
+  requestToId String
+  requestedAt DateTime @default(now())
+  requestFrom User @relation(fields: [requestFromId], references: [id], name: "UserFriendRequests")
+  requestTo User @relation(fields: [requestToId], references: [id], name: "UserReceivedRequests")
 }
 
 model BlockList {
-  userId         String
-  blockedUserId  String
-  blockedAt      DateTime @default(now())
-  user           User @relation(fields: [userId], references: [id], name: "UserBlocked")
-  blockedUser    User @relation(fields: [blockedUserId], references: [id], name: "BlockedUsers")
+  userId String
+  blockedUserId String
+  blockedAt DateTime @default(now())
+  user User @relation(fields: [userId], references: [id], name: "UserBlocked")
+  blockedUser User @relation(fields: [blockedUserId], references: [id], name: "BlockedUsers")
 
   @@id([userId, blockedUserId])
 }
 
 model GroupChat {
-  id         String   @id @default(uuid())
-  groupName  String
+  id String @id @default(uuid())
+  groupName String
   groupPhoto String?
   createdById String
-  createdBy   User     @relation(fields: [createdById], references: [id], name: "UserGroupChatsCreated")
-  createdAt  DateTime @default(now())
+  createdBy User @relation(fields: [createdById], references: [id], name: "UserGroupChatsCreated")
+  createdAt DateTime @default(now())
 
-  members    GroupMember[]
-  messages   GroupMessage[]
+  members GroupMember[]
+  messages GroupMessage[]
   joinRequests GroupJoinRequest[]
 }
 
 model GroupMember {
-  groupId  String
-  userId   String
-  isAdmin  Boolean   @default(false)
-  joinedAt DateTime  @default(now())
-  group    GroupChat @relation(fields: [groupId], references: [id])
-  user     User      @relation(fields: [userId], references: [id], name: "UserGroupMembers")
+  groupId String
+  userId String
+  isAdmin Boolean @default(false)
+  joinedAt DateTime @default(now())
+  group GroupChat @relation(fields: [groupId], references: [id])
+  user User @relation(fields: [userId], references: [id], name: "UserGroupMembers")
 
   @@id([groupId, userId])
 }
 
 model GroupJoinRequest {
-  id          String   @id @default(uuid())
-  groupId     String
-  fromUserId  String
-  toUserId    String
+  id String @id @default(uuid())
+  groupId String
+  fromUserId String
+  toUserId String
   requestedAt DateTime @default(now())
-  group       GroupChat @relation(fields: [groupId], references: [id])
-  fromUser    User      @relation(fields: [fromUserId], references: [id], name: "UserGroupJoinRequests")
-  toUser      User      @relation(fields: [toUserId], references: [id], name: "UserReceivedGroupJoinRequests")
+  group GroupChat @relation(fields: [groupId], references: [id])
+  fromUser User @relation(fields: [fromUserId], references: [id], name: "UserGroupJoinRequests")
+  toUser User @relation(fields: [toUserId], references: [id], name: "UserReceivedGroupJoinRequests")
 }
 
 model GroupMessage {
-  id        String   @id @default(uuid())
-  groupId   String
-  authorId  String
-  content   String?
-  photoUrl  String?
-  type      String?
+  id String @id @default(uuid())
+  groupId String
+  authorId String
+  content String?
+  photoUrl String?
+  type String?
   createdAt DateTime @default(now())
-  deleted   Boolean  @default(false)
-  group     GroupChat @relation(fields: [groupId], references: [id])
-  author    User      @relation(fields: [authorId], references: [id], name: "UserGroupMessages")
+  deleted Boolean @default(false)
+  group GroupChat @relation(fields: [groupId], references: [id])
+  author User @relation(fields: [authorId], references: [id], name: "UserGroupMessages")
 }
 
 model PrivateMessage {
-  id         String   @id @default(uuid())
+  id String @id @default(uuid())
   fromUserId String
-  toUserId   String
-  content    String?
-  photoUrl   String?
-  type       String?
-  createdAt  DateTime @default(now())
-  deleted    Boolean  @default(false)
-  fromUser   User     @relation(fields: [fromUserId], references: [id], name: "UserPrivateMessagesSent")
-  toUser     User     @relation(fields: [toUserId], references: [id], name: "UserPrivateMessagesReceived")
+  toUserId String
+  content String?
+  photoUrl String?
+  type String?
+  createdAt DateTime @default(now())
+  deleted Boolean @default(false)
+  fromUser User @relation(fields: [fromUserId], references: [id], name: "UserPrivateMessagesSent")
+  toUser User @relation(fields: [toUserId], references: [id], name: "UserPrivateMessagesReceived")
 }
