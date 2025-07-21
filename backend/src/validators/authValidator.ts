@@ -12,6 +12,8 @@ const passwordLengthMsg = "Your password must be at least 8 characters long.";
 const usernameLengthMsg = "Username must be between 4 and 16 characters long.";
 const usernamePatternMsg =
     "Username can only contain letters, numbers, dots, underscores, and hyphens.";
+const usernameAlreadyExistsMsg =
+    "An account with this username already exists.";
 
 // Validate fields (email, password, username, displayName)
 // We purposefully don't validate photoUrl, maybe later
@@ -33,6 +35,13 @@ exports.validateUserRegister = [
         .withMessage(usernameLengthMsg)
         .bail()
         .matches(/^[a-zA-Z0-9._-]+$/)
-        .withMessage(usernamePatternMsg),
+        .withMessage(usernamePatternMsg)
+        .bail()
+        .custom(async (username: string) => {
+            const exists = await db.user.usernameExists(username);
+            if (exists) {
+                return Promise.reject(usernameAlreadyExistsMsg);
+            }
+        }),
     // body("displayName")
 ];
