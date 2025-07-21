@@ -60,8 +60,18 @@ async function emailExists(email: string) {
     return !!user;
 }
 
+async function usernameExists(username: string) {
+    const user = await prisma.user.findUnique({
+        where: {
+            username,
+        },
+    });
+    return !!user;
+}
+
 module.exports = {
     emailExists,
+    usernameExists,
     getUserByEmail,
     getUserById,
     registerGuest,
