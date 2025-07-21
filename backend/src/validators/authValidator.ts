@@ -15,6 +15,11 @@ const usernamePatternMsg =
 const usernameAlreadyExistsMsg =
     "An account with this username already exists.";
 
+// DISPLAYNAME REGISTRATION
+const displayNamePatternMsg = "Display name contains invalid characters.";
+const displayNameLengthMsg =
+    "Display name must be between 1 and 50 characters.";
+
 // Validate fields (email, password, username, displayName)
 // We purposefully don't validate photoUrl, maybe later
 // becaues its goign to be done via multer
@@ -43,5 +48,10 @@ exports.validateUserRegister = [
                 return Promise.reject(usernameAlreadyExistsMsg);
             }
         }),
-    // body("displayName")
+    body("displayName")
+        .isLength({ min: 1, max: 50 })
+        .withMessage(displayNameLengthMsg)
+        .bail()
+        .matches(/^[a-zA-Z0-9 .,'\-]{1,50}$/)
+        .withMessage(displayNamePatternMsg),
 ];
