@@ -51,4 +51,19 @@ async function registerGuest(
     });
 }
 
-module.exports = { getUserByEmail, getUserById, registerGuest, registerUser };
+async function emailExists(email: string) {
+    const user = await prisma.user.findUnique({
+        where: {
+            email,
+        },
+    });
+    return !!user;
+}
+
+module.exports = {
+    emailExists,
+    getUserByEmail,
+    getUserById,
+    registerGuest,
+    registerUser,
+};

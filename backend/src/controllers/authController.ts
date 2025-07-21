@@ -5,47 +5,56 @@ const jwt = require("jsonwebtoken");
 const bcrypt = require("bcryptjs");
 
 const { validationResult } = require("express-validator");
+const { validateUserRegister } = require("../validators/authValidator");
 
-exports.registerUser = async (req: any, res: any) => {
-    // TODO
-    // validation of input fields
+exports.registerUser = [
+    validateUserRegister,
+    async (req: any, res: any) => {
+        const errors = validationResult(req);
+        if (!errors.isEmpty()) {
+            const err = errors.array({ onlyFirstError: true });
+            return res.status(400).json({ msg: err[0].msg });
+        }
 
-    const { email, password, username, displayName, photoUrl } = req.body;
-    const hashedPassword = await bcrypt.hash(password, 10);
+        const { email, password, username, displayName, photoUrl } = req.body;
+        const hashedPassword = await bcrypt.hash(password, 10);
 
-    // create user
-    const user = await db.user.registerUser(
-        email,
-        hashedPassword,
-        username,
-        displayName,
-        photoUrl
-    );
+        // create user
+        const user = await db.user.registerUser(
+            email,
+            hashedPassword,
+            username,
+            displayName,
+            photoUrl
+        );
 
-    const payload = {
-        id: user.id,
-        email: user.email,
-        username: user.username,
-        displayName: user.displayName,
-        photoUrl: user.photoUrl,
-        role: user.role,
-        creationDate: user.creationDate,
-        lastSeenAt: user.lastSeenAt,
-    };
+        const payload = {
+            id: user.id,
+            email: user.email,
+            username: user.username,
+            displayName: user.displayName,
+            photoUrl: user.photoUrl,
+            role: user.role,
+            creationDate: user.creationDate,
+            lastSeenAt: user.lastSeenAt,
+        };
 
-    const token = jwt.sign(payload, process.env.JWT_SECRET, {
-        expiresIn: "1h",
-    });
+        const token = jwt.sign(payload, process.env.JWT_SECRET, {
+            expiresIn: "1h",
+        });
 
-    res.cookie("token", token, {
-        httpOnly: true,
-        sameSite: "strict",
-        secure: false,
-        maxAge: 3600000,
-    });
+        res.cookie("token", token, {
+            httpOnly: true,
+            sameSite: "strict",
+            secure: false,
+            maxAge: 3600000,
+        });
 
-    res.status(200).json({ message: "Successfully registered and logged in." });
-};
+        res.status(200).json({
+            message: "Successfully registered and logged in.",
+        });
+    },
+];
 
 function randomGuestDisplayName() {
     return "Guest" + Math.floor(10000 + Math.random() * 90000);
