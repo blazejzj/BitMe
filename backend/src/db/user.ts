@@ -33,9 +33,7 @@ async function registerGuest(
     username: string,
     displayName: string,
     photoUrl: string,
-    role: string,
-    creationDate: Date,
-    lastSeenAt: Date
+    role: string
 ) {
     return prisma.user.create({
         data: {
@@ -45,8 +43,6 @@ async function registerGuest(
             displayName,
             photoUrl,
             role,
-            creationDate,
-            lastSeenAt,
         },
     });
 }

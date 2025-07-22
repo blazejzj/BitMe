@@ -71,8 +71,6 @@ exports.loginGuest = async (req: any, res: any) => {
         displayName: randomGuestDisplayName(),
         photoUrl: null,
         role: "GUEST",
-        creationDate: Date.now(),
-        lastSeenAt: Date.now(),
     };
 
     const hashedGuestPassword = await bcrypt.hash(payload.password, 10);
@@ -82,9 +80,7 @@ exports.loginGuest = async (req: any, res: any) => {
         payload.username,
         payload.displayName,
         payload.photoUrl,
-        payload.role,
-        payload.creationDate,
-        payload.lastSeenAt
+        payload.role
     );
 
     const token = jwt.sign(payload, process.env.JWT_SECRET, {
