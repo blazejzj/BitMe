@@ -28,6 +28,7 @@ async function registerUser(
 }
 
 async function registerGuest(
+    id: string,
     email: string,
     password: string,
     username: string,
@@ -37,6 +38,7 @@ async function registerGuest(
 ) {
     return prisma.user.create({
         data: {
+            id,
             email,
             password,
             username,

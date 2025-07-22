@@ -59,12 +59,13 @@ exports.registerUser = [
     },
 ];
 
-function randomGuestDisplayName() {
-    return "Guest" + Math.floor(10000 + Math.random() * 90000);
-}
-
 exports.loginGuest = async (req: any, res: any) => {
+    function randomGuestDisplayName() {
+        return "Guest" + Math.floor(10000 + Math.random() * 90000);
+    }
+
     const payload = {
+        id: randomUUID(),
         email: randomUUID(),
         password: randomUUID(),
         username: randomUUID(),
@@ -75,6 +76,7 @@ exports.loginGuest = async (req: any, res: any) => {
 
     const hashedGuestPassword = await bcrypt.hash(payload.password, 10);
     await db.user.registerGuest(
+        payload.id,
         payload.email,
         hashedGuestPassword,
         payload.username,
@@ -103,6 +105,9 @@ exports.loginGuest = async (req: any, res: any) => {
 exports.login = [
     validateUserLogin,
     async (req: any, res: any) => {
+        // TO DO
+        // update last seen when logged in
+
         const errors = validationResult(req);
         const wrongCredentialsErr =
             "Incorrect email or password. Please try again.";
