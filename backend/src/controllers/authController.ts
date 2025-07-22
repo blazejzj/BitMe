@@ -5,7 +5,10 @@ const jwt = require("jsonwebtoken");
 const bcrypt = require("bcryptjs");
 
 const { validationResult } = require("express-validator");
-const { validateUserRegister } = require("../validators/authValidator");
+const {
+    validateUserRegister,
+    validateUserLogin,
+} = require("../validators/authValidator");
 
 exports.registerUser = [
     validateUserRegister,
@@ -51,7 +54,7 @@ exports.registerUser = [
         });
 
         res.status(200).json({
-            message: "Successfully registered and logged in.",
+            msg: "Successfully registered and logged in.",
         });
     },
 ];
@@ -97,48 +100,56 @@ exports.loginGuest = async (req: any, res: any) => {
     });
 
     res.status(200).json({
-        message: "Successfully logged in as guest.",
+        msg: "Successfully logged in as guest.",
     });
 };
 
-exports.login = async (req: any, res: any) => {
-    // TODO
-    // Validation of input fields has to be done
+exports.login = [
+    validateUserLogin,
+    async (req: any, res: any) => {
+        const errors = validationResult(req);
+        const wrongCredentialsErr =
+            "Incorrect email or password. Please try again.";
 
-    const { email, password } = req.body;
-    const user = await db.user.getUserByEmail(email);
-    const passwordMatch = await bcrypt.compare(password, user.password);
+        if (!errors.isEmpty()) {
+            return res.status(400).json({ msg: wrongCredentialsErr });
+        }
 
-    if (!user || !passwordMatch)
-        return res.status(401).json({ message: "Wrong username or password." });
+        const { email, password } = req.body;
+        const user = await db.user.getUserByEmail(email);
+        const passwordMatch = await bcrypt.compare(password, user.password);
 
-    const payload = {
-        id: user.id,
-        email: user.email,
-        username: user.username,
-        displayName: user.displayName,
-        photoUrl: user.photoUrl,
-        role: user.role,
-        creationDate: user.creationDate,
-        lastSeenAt: user.lastSeenAt,
-    };
+        if (!user || !passwordMatch)
+            return res.status(401).json({ msg: wrongCredentialsErr });
 
-    const token = jwt.sign(payload, process.env.JWT_SECRET, {
-        expiresIn: "1h",
-    });
+        const payload = {
+            id: user.id,
+            email: user.email,
+            username: user.username,
+            displayName: user.displayName,
+            photoUrl: user.photoUrl,
+            role: user.role,
+            creationDate: user.creationDate,
+            lastSeenAt: user.lastSeenAt,
+        };
 
-    // set cookie with the token we generated here
-    res.cookie("token", token, {
-        httpOnly: true,
-        secure: false, // this aint good xd but for localhost ok
-        maxAge: 3600000,
-        sameSite: "strict",
-    });
+        const token = jwt.sign(payload, process.env.JWT_SECRET, {
+            expiresIn: "1h",
+        });
 
-    res.status(200).json({
-        message: "Login successfull",
-    });
-};
+        // set cookie with the token we generated here
+        res.cookie("token", token, {
+            httpOnly: true,
+            secure: false, // this aint good xd but for localhost ok
+            maxAge: 3600000,
+            sameSite: "strict",
+        });
+
+        res.status(200).json({
+            msg: "Successfully logged in.",
+        });
+    },
+];
 
 exports.logOut = (req: any, res: any) => {
     // when we log out we clear the cookie
@@ -149,6 +160,6 @@ exports.logOut = (req: any, res: any) => {
     });
 
     res.status(200).json({
-        message: "Successfully logged out.",
+        msg: "Successfully logged out.",
     });
 };

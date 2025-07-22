@@ -16,7 +16,7 @@ function isNotLoggedIn(
     const token = req.cookies?.token;
 
     if (token) {
-        return res.status(400).json({ message: "User already authenticated." });
+        return res.status(400).json({ msg: "User already authenticated." });
     }
 
     next();
