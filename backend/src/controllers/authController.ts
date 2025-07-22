@@ -123,6 +123,7 @@ exports.login = [
         if (!user || !passwordMatch)
             return res.status(401).json({ msg: wrongCredentialsErr });
 
+        await db.user.updateLastseenAt(user.id);
         const payload = {
             id: user.id,
             email: user.email,

@@ -67,6 +67,17 @@ async function usernameExists(username: string) {
     return !!user;
 }
 
+async function updateLastseenAt(id: string) {
+    await prisma.user.update({
+        where: {
+            id,
+        },
+        data: {
+            lastSeenAt: new Date(),
+        },
+    });
+}
+
 module.exports = {
     emailExists,
     usernameExists,
@@ -74,4 +85,5 @@ module.exports = {
     getUserById,
     registerGuest,
     registerUser,
+    updateLastseenAt,
 };
