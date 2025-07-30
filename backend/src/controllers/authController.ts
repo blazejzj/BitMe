@@ -1,3 +1,4 @@
+export {};
 import { randomUUID } from "crypto";
 
 const db = require("../db/index");
@@ -105,9 +106,6 @@ exports.loginGuest = async (req: any, res: any) => {
 exports.login = [
     validateUserLogin,
     async (req: any, res: any) => {
-        // TO DO
-        // update last seen when logged in
-
         const errors = validationResult(req);
         const wrongCredentialsErr =
             "Incorrect email or password. Please try again.";

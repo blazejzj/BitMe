@@ -4,6 +4,7 @@ const passport = require("passport");
 const cookieParser = require("cookie-parser");
 const passportConfig = require("./config/configurePassport");
 const authRouter = require("./routers/authRouter");
+const profileRouter = require("./routers/profileRouter");
 
 require("dotenv").config();
 
@@ -29,6 +30,7 @@ app.use(cors(corsOptions));
 
 // routers
 app.use("/api/auth", authRouter);
+app.use("/api/profile", profileRouter);
 
 // listen
 const port = process.env.PORT || 4000;

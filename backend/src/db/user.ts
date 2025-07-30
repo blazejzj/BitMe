@@ -78,6 +78,50 @@ async function updateLastseenAt(id: string) {
     });
 }
 
+async function updateEmail(userId: string, newEmail: string) {
+    await prisma.user.update({
+        where: {
+            id: userId,
+        },
+        data: {
+            email: newEmail,
+        },
+    });
+}
+
+async function updateUsername(userId: string, newUsername: string) {
+    await prisma.user.update({
+        where: {
+            id: userId,
+        },
+        data: {
+            username: newUsername,
+        },
+    });
+}
+
+async function updatePassword(userId: string, newPassword: string) {
+    await prisma.user.update({
+        where: {
+            id: userId,
+        },
+        data: {
+            password: newPassword,
+        },
+    });
+}
+
+async function updateDisplayName(userId: string, newDisplayName: string) {
+    await prisma.user.update({
+        where: {
+            id: userId,
+        },
+        data: {
+            displayName: newDisplayName,
+        },
+    });
+}
+
 module.exports = {
     emailExists,
     usernameExists,
@@ -86,4 +130,8 @@ module.exports = {
     registerGuest,
     registerUser,
     updateLastseenAt,
+    updateDisplayName,
+    updateEmail,
+    updatePassword,
+    updateUsername,
 };
