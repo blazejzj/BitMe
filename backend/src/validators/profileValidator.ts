@@ -14,8 +14,6 @@ const passwordNoMatch = "Passwords do not match.";
 const usernameLengthMsg = "Username must be between 4 and 16 characters long.";
 const usernamePatternMsg =
     "Username can only contain letters, numbers, dots, underscores, and hyphens.";
-const usernameAlreadyExistsMsg =
-    "An account with this username already exists.";
 
 // DISPLAYNAME UPDATE
 const displayNamePatternMsg = "Display name contains invalid characters.";
@@ -30,26 +28,19 @@ exports.validateProfileUpdate = [
         .withMessage(passwordLengthMsg)
         .bail(),
     body("confirmPassword")
-        .optional()
+        .optional({ checkFalsy: true })
         .custom((value: string, { req }: { req: Request }) => {
             if (value !== req.body.password) {
                 return Promise.reject(passwordNoMatch);
             }
+            return true;
         }),
     body("username")
         .optional()
         .isLength({ min: 4, max: 16 })
         .withMessage(usernameLengthMsg)
-        .bail()
         .matches(/^[a-zA-Z0-9._-]+$/)
-        .withMessage(usernamePatternMsg)
-        .bail()
-        .custom(async (username: string) => {
-            const exists = await db.user.usernameExists(username);
-            if (exists) {
-                return Promise.reject(usernameAlreadyExistsMsg);
-            }
-        }),
+        .withMessage(usernamePatternMsg),
     body("displayName")
         .optional()
         .isLength({ min: 1, max: 50 })

@@ -22,16 +22,25 @@ exports.updateProfile = [
             });
         }
 
+        // EMAIL
         if (req.body.email && req.body.email !== req.user.email) {
-            const exists = await db.user.emailExists(req.body.email);
-            if (exists) {
+            const existing = await db.user.getUserByEmail(req.body.email);
+            if (existing && existing.id !== userId) {
                 return res.status(400).json({
                     msg: "An account with this email already exists.",
                 });
             }
+            await db.user.updateEmail(userId, req.body.email);
         }
 
-        if (req.body.username) {
+        // USERNAME
+        if (req.body.username && req.body.username !== req.user.username) {
+            const existing = await db.user.getUserByUsername(req.body.username);
+            if (existing && existing.id !== userId) {
+                return res.status(400).json({
+                    msg: "An account with this username already exists.",
+                });
+            }
             await db.user.updateUsername(userId, req.body.username);
         }
 

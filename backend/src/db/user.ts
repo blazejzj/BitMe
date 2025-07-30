@@ -15,6 +15,13 @@ async function getUserById(id: string) {
     return user;
 }
 
+async function getUserByUsername(username: string) {
+    const user = await prisma.user.findUnique({
+        where: { username },
+    });
+    return user;
+}
+
 async function registerUser(
     email: string,
     password: string,
@@ -127,6 +134,7 @@ module.exports = {
     usernameExists,
     getUserByEmail,
     getUserById,
+    getUserByUsername,
     registerGuest,
     registerUser,
     updateLastseenAt,
