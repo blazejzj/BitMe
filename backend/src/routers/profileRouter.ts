@@ -9,3 +9,5 @@ const profileController = require("../controllers/profileController");
 
 // UPDATE PROFILE (email, username, displayName, password, photo)
 profileRouter.post("/update", authenticateJWT, profileController.updateProfile);
+
+module.exports = profileRouter;
