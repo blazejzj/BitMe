@@ -8,7 +8,7 @@ exports.updateProfile = [
     validateProfileUpdate,
     async (req: any, res: any) => {
         const errors = validationResult(req);
-        if (!errors) {
+        if (!errors.isEmpty()) {
             const err = errors.array({ onlyFirstError: true });
             return res.status(400).json({ msg: err[0].msg });
         }
@@ -22,8 +22,13 @@ exports.updateProfile = [
             });
         }
 
-        if (req.body.email) {
-            await db.user.updateEmail(userId, req.body.email);
+        if (req.body.email && req.body.email !== req.user.email) {
+            const exists = await db.user.emailExists(req.body.email);
+            if (exists) {
+                return res.status(400).json({
+                    msg: "An account with this email already exists.",
+                });
+            }
         }
 
         if (req.body.username) {

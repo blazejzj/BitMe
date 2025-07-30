@@ -4,7 +4,7 @@ const { db } = require("../db/index");
 import { Request } from "express";
 
 // EMAIL UPDATE
-const invalidEmailFormat = "Please enter a valid email adress.";
+const invalidEmailFormat = "Please enter a valid email address.";
 
 // PASSWORD UPDATE
 const passwordLengthMsg = "New password has to be atleast 8 characters long.";
@@ -23,16 +23,21 @@ const displayNameLengthMsg =
     "Display name must be between 1 and 50 characters.";
 
 exports.validateProfileUpdate = [
-    body("email").isEmail().withMessage(invalidEmailFormat).bail(),
-    body("password").isLength({ min: 8 }).withMessage(passwordLengthMsg).bail(),
-    body("confirmPassword").custom(
-        (value: string, { req }: { req: Request }) => {
+    body("email").optional().isEmail().withMessage(invalidEmailFormat).bail(),
+    body("password")
+        .optional()
+        .isLength({ min: 8 })
+        .withMessage(passwordLengthMsg)
+        .bail(),
+    body("confirmPassword")
+        .optional()
+        .custom((value: string, { req }: { req: Request }) => {
             if (value !== req.body.password) {
                 return Promise.reject(passwordNoMatch);
             }
-        }
-    ),
+        }),
     body("username")
+        .optional()
         .isLength({ min: 4, max: 16 })
         .withMessage(usernameLengthMsg)
         .bail()
@@ -46,6 +51,7 @@ exports.validateProfileUpdate = [
             }
         }),
     body("displayName")
+        .optional()
         .isLength({ min: 1, max: 50 })
         .withMessage(displayNameLengthMsg)
         .bail()
