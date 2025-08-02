@@ -74,6 +74,14 @@ async function usernameExists(username: string) {
     return !!user;
 }
 
+async function userIdExists(id: string) {
+    const user = await prisma.user.findUnique({
+        where: { id },
+    });
+
+    return !!user;
+}
+
 async function updateLastseenAt(id: string) {
     await prisma.user.update({
         where: {
@@ -132,6 +140,7 @@ async function updateDisplayName(userId: string, newDisplayName: string) {
 module.exports = {
     emailExists,
     usernameExists,
+    userIdExists,
     getUserByEmail,
     getUserById,
     getUserByUsername,
