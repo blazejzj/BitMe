@@ -1,7 +1,7 @@
 const db = require("../db/index");
 
 exports.blockUser = async (req: any, res: any) => {
-    const user = req.body.user;
+    const user = req.user;
     const blockedUserId = req.params.id;
 
     const found = await db.userConnections.isBlocked(user.id, blockedUserId);
@@ -18,7 +18,7 @@ exports.blockUser = async (req: any, res: any) => {
 };
 
 exports.unblockUser = async (req: any, res: any) => {
-    const user = req.body.user;
+    const user = req.user;
     const blockedUserId = req.params.id;
 
     const found = await db.userConnections.isBlocked(user.id, blockedUserId);

@@ -6,7 +6,7 @@ const cookieParser = require("cookie-parser");
 const passportConfig = require("./config/configurePassport");
 const authRouter = require("./routers/authRouter");
 const profileRouter = require("./routers/profileRouter");
-const friendsRouter = require("./routers/userFriendsRouter");
+const friendsRouter = require("./routers/friendsRouter");
 
 require("dotenv").config();
 
