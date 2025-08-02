@@ -1,0 +1,37 @@
+export {};
+const { Router } = require("express");
+const friendsRouter = Router();
+const { authenticateJWT } = require("../middleware/authMiddleware");
+const friendsController = require("../controllers/friendsController");
+
+// BLOCK USERS
+friendsRouter.post("/block/:id", authenticateJWT, friendsController.blockUser);
+friendsRouter.post(
+    "/unblock/:id",
+    authenticateJWT,
+    friendsController.unblockUser
+);
+
+// FRIEND REQUESTS
+friendsRouter.post(
+    "/send_request/:id",
+    authenticateJWT,
+    friendsController.sendFriendRequest
+);
+friendsRouter.post(
+    "/remove_request/:id",
+    authenticateJWT,
+    friendsController.removeFriendRequest
+);
+friendsRouter.post(
+    "/accept_request/:id",
+    authenticateJWT,
+    friendsController.acceptFriendRequest
+);
+friendsRouter.post(
+    "/reject_request/:id",
+    authenticateJWT,
+    friendsController.rejectFriendRequest
+);
+
+module.exports = friendsRouter;
