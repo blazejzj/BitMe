@@ -23,8 +23,25 @@ async function unblock(userId: string, blockedUserId: string) {
     });
 }
 
+async function getBlockedUsers(userId: string) {
+    const users = await prisma.blockList.findMany({
+        where: { userId },
+        include: {
+            blockedUser: {
+                select: {
+                    id: true,
+                    displayName: true,
+                    username: true,
+                },
+            },
+        },
+    });
+    return users;
+}
+
 module.exports = {
     isBlocked,
     block,
     unblock,
+    getBlockedUsers,
 };

@@ -11,6 +11,11 @@ friendsRouter.post(
     authenticateJWT,
     friendsController.unblockUser
 );
+friendsRouter.get(
+    "/blocked_users",
+    authenticateJWT,
+    friendsController.getBlockedUsers
+);
 
 // FRIEND REQUESTS
 friendsRouter.post(
