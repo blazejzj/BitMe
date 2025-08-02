@@ -1,5 +1,6 @@
 export {};
-const prisma = require("./prisma");
+import prisma from "./prisma";
+import type { Role } from "@prisma/client";
 
 async function getUserByEmail(email: string) {
     const user = await prisma.user.findUnique({
@@ -41,7 +42,7 @@ async function registerGuest(
     username: string,
     displayName: string,
     photoUrl: string,
-    role: string
+    role: Role
 ) {
     return prisma.user.create({
         data: {
@@ -137,7 +138,7 @@ async function updateDisplayName(userId: string, newDisplayName: string) {
     });
 }
 
-module.exports = {
+export default {
     emailExists,
     usernameExists,
     userIdExists,

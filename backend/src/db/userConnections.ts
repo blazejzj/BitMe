@@ -1,4 +1,4 @@
-const prisma = require("./prisma");
+import prisma from "./prisma";
 
 async function isBlocked(userId: string, blockedUserId: string) {
     const foundEntry = await prisma.blockList.findUnique({
@@ -39,7 +39,7 @@ async function getBlockedUsers(userId: string) {
     return users;
 }
 
-module.exports = {
+export default {
     isBlocked,
     block,
     unblock,
