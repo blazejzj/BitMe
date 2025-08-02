@@ -41,7 +41,7 @@ async function registerGuest(
     password: string,
     username: string,
     displayName: string,
-    photoUrl: string,
+    photoUrl: string | null,
     role: Role
 ) {
     return prisma.user.create({
