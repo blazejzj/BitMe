@@ -68,6 +68,7 @@ model FriendRequest {
   requestedAt DateTime @default(now())
   requestFrom User @relation(fields: [requestFromId], references: [id], name: "UserFriendRequests")
   requestTo User @relation(fields: [requestToId], references: [id], name: "UserReceivedRequests")
+  @@unique([requestFromId, requestToId])
 }
 
 model BlockList {
