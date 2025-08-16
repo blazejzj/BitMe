@@ -145,3 +145,18 @@ exports.rejectFriendRequest = async (req: any, res: any) => {
     }
     return res.status(200).json({ msg: "Friend request rejected." });
 };
+
+exports.removeFriend = async (req: any, res: any) => {
+    const user = req.user;
+    const friendUserId = req.params.id;
+
+    const areFriends = await db.userConnections.isFriend(user.id, friendUserId);
+    if (!areFriends) {
+        return res
+            .status(404)
+            .json({ msg: "You are not friends with this user." });
+    }
+
+    await db.userConnections.removeFriend(user.id, friendUserId);
+    return res.status(200).json({ msg: "Friend removed." });
+};

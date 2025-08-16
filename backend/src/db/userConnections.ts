@@ -124,6 +124,15 @@ async function acceptFriendRequest(fromId: string, toId: string) {
     ]);
 }
 
+async function removeFriend(userId: string, friendId: string) {
+    await prisma.$transaction([
+        prisma.friends.deleteMany({ where: { userId, friendId } }),
+        prisma.friends.deleteMany({
+            where: { userId: friendId, friendId: userId },
+        }),
+    ]);
+}
+
 export default {
     isBlocked,
     block,
@@ -136,4 +145,5 @@ export default {
     removeFriendRequest,
     rejectFriendRequest,
     acceptFriendRequest,
+    removeFriend,
 };

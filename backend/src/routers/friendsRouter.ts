@@ -46,4 +46,11 @@ friendsRouter.get(
     friendsController.getAllFriendRequests
 );
 
+// FRIENDS
+friendsRouter.post(
+    "/remove_friend/:id",
+    authenticateJWT,
+    friendsController.removeFriend
+);
+
 module.exports = friendsRouter;
