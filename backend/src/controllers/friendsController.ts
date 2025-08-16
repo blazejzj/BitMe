@@ -41,7 +41,7 @@ exports.unblockUser = async (req: any, res: any) => {
 exports.getBlockedUsers = async (req: any, res: any) => {
     const user = req.user;
 
-    const blockedUsers = db.userConnections.getBlockedUsers(user.id);
+    const blockedUsers = await db.userConnections.getBlockedUsers(user.id);
     return res.status(200).json({
         blockedUsers,
     });
@@ -53,6 +53,16 @@ exports.sendFriendRequest = async (req: any, res: any) => {
 
     if (user.id === friendUserId) {
         return res.status(400).json({ msg: "You can't add yourself." });
+    }
+
+    const blockedEitherWay =
+        (await db.userConnections.isBlocked(user.id, friendUserId)) ||
+        (await db.userConnections.isBlocked(friendUserId, user.id));
+
+    if (blockedEitherWay) {
+        return res
+            .status(400)
+            .json({ msg: "You can’t send a request due to a block." });
     }
 
     const friendAlready = await db.userConnections.isFriend(
@@ -82,12 +92,14 @@ exports.sendFriendRequest = async (req: any, res: any) => {
             .json({ msg: "Person you are trying to add does not exist." });
     }
 
-    await db.sendFriendRequest(user.id, friendUserId);
+    await db.userConnections.sendFriendRequest(user.id, friendUserId);
 };
 
 exports.getAllFriendRequests = async (req: any, res: any) => {
     const userId = req.user.id;
-    const requests = db.userConnections.getAllActiveFriendRequests(userId);
+    const requests = await db.userConnections.getAllActiveFriendRequests(
+        userId
+    );
     res.status(200).json({
         msg: "Successfully fetched all friends requests.",
         requests: requests,
@@ -159,4 +171,16 @@ exports.removeFriend = async (req: any, res: any) => {
 
     await db.userConnections.removeFriend(user.id, friendUserId);
     return res.status(200).json({ msg: "Friend removed." });
+};
+
+exports.getFriends = async (req: any, res: any) => {
+    const userId = req.user.id;
+    const friends = await db.userConnections.getFriends(userId);
+    return res.status(200).json({ friends });
+};
+
+exports.getIncomingFriendRequests = async (req: any, res: any) => {
+    const userId = req.user.id;
+    const requests = await db.userConnections.getIncomingFriendRequests(userId);
+    return res.status(200).json({ requests });
 };

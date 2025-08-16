@@ -133,6 +133,42 @@ async function removeFriend(userId: string, friendId: string) {
     ]);
 }
 
+async function getFriends(userId: string) {
+    const rows = await prisma.friends.findMany({
+        where: { userId },
+        orderBy: { friendsSince: "desc" },
+        include: {
+            friend: {
+                select: {
+                    id: true,
+                    displayName: true,
+                    username: true,
+                    photoUrl: true,
+                },
+            },
+        },
+    });
+
+    return rows.map((r) => r.friend);
+}
+
+async function getIncomingFriendRequests(userId: string) {
+    return prisma.friendRequest.findMany({
+        where: { requestToId: userId },
+        include: {
+            requestFrom: {
+                select: {
+                    id: true,
+                    displayName: true,
+                    username: true,
+                    photoUrl: true,
+                },
+            },
+        },
+        orderBy: { requestedAt: "desc" },
+    });
+}
+
 export default {
     isBlocked,
     block,
@@ -146,4 +182,6 @@ export default {
     rejectFriendRequest,
     acceptFriendRequest,
     removeFriend,
+    getFriends,
+    getIncomingFriendRequests,
 };

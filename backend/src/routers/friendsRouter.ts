@@ -38,6 +38,11 @@ friendsRouter.post(
     authenticateJWT,
     friendsController.rejectFriendRequest
 );
+friendsRouter.get(
+    "/incoming_requests",
+    authenticateJWT,
+    friendsController.getIncomingFriendRequests
+);
 
 // LIST OWN REQUESTS
 friendsRouter.get(
@@ -47,10 +52,12 @@ friendsRouter.get(
 );
 
 // FRIENDS
-friendsRouter.post(
+friendsRouter.delete(
     "/remove_friend/:id",
     authenticateJWT,
     friendsController.removeFriend
 );
+
+friendsRouter.get("/friends", authenticateJWT, friendsController.getFriends);
 
 module.exports = friendsRouter;
