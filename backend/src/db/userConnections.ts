@@ -83,6 +83,45 @@ async function getAllActiveFriendRequests(userId: string) {
             },
         },
     });
+    return requests;
+}
+
+async function removeFriendRequest(fromId: string, toId: string) {
+    const res = await prisma.friendRequest.deleteMany({
+        where: { requestFromId: fromId, requestToId: toId },
+    });
+    return res.count;
+}
+
+async function rejectFriendRequest(fromId: string, toId: string) {
+    const res = await prisma.friendRequest.deleteMany({
+        where: { requestFromId: fromId, requestToId: toId },
+    });
+    return res.count;
+}
+
+async function acceptFriendRequest(fromId: string, toId: string) {
+    // fromId = A (sender), toId = B (receiver)
+    // create friendship both ways, remove any requests between A and B
+    await prisma.$transaction([
+        // transaction because all of them have to be successfull
+        prisma.friends.upsert({
+            where: { userId_friendId: { userId: fromId, friendId: toId } },
+            create: { userId: fromId, friendId: toId },
+            update: {},
+        }),
+        prisma.friends.upsert({
+            where: { userId_friendId: { userId: toId, friendId: fromId } },
+            create: { userId: toId, friendId: fromId },
+            update: {},
+        }),
+        prisma.friendRequest.deleteMany({
+            where: { requestFromId: fromId, requestToId: toId },
+        }),
+        prisma.friendRequest.deleteMany({
+            where: { requestFromId: toId, requestToId: fromId },
+        }),
+    ]);
 }
 
 export default {
@@ -94,4 +133,7 @@ export default {
     isRequestActive,
     sendFriendRequest,
     getAllActiveFriendRequests,
+    removeFriendRequest,
+    rejectFriendRequest,
+    acceptFriendRequest,
 };

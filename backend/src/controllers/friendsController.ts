@@ -94,8 +94,54 @@ exports.getAllFriendRequests = async (req: any, res: any) => {
     });
 };
 
-exports.removeFriendRequest = async (req: any, res: any) => {};
+exports.removeFriendRequest = async (req: any, res: any) => {
+    const user = req.user;
+    const friendUserId = req.params.id;
 
-exports.acceptFriendRequest = async (req: any, res: any) => {};
+    const removed = await db.userConnections.removeFriendRequest(
+        user.id,
+        friendUserId
+    );
+    if (removed === 0) {
+        return res
+            .status(404)
+            .json({ msg: "No outgoing friend request to remove." });
+    }
+    return res.status(200).json({ msg: "Friend request removed." });
+};
 
-exports.rejectFriendRequest = async (req: any, res: any) => {};
+exports.acceptFriendRequest = async (req: any, res: any) => {
+    const user = req.user;
+    const friendUserId = req.params.id;
+
+    const exists = await db.userConnections.isRequestActive(
+        friendUserId,
+        user.id
+    );
+    if (!exists) {
+        return res
+            .status(404)
+            .json({ msg: "No incoming friend request from this user." });
+    }
+
+    // add friendship (both directions) and clear any pending requests between
+    await db.userConnections.acceptFriendRequest(friendUserId, user.id);
+
+    return res.status(200).json({ msg: "Friend request accepted." });
+};
+
+exports.rejectFriendRequest = async (req: any, res: any) => {
+    const user = req.user;
+    const friendUserId = req.params.id;
+
+    const removed = await db.userConnections.rejectFriendRequest(
+        friendUserId,
+        user.id
+    );
+    if (removed === 0) {
+        return res
+            .status(404)
+            .json({ msg: "No incoming friend request from this user." });
+    }
+    return res.status(200).json({ msg: "Friend request rejected." });
+};

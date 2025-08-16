@@ -39,4 +39,11 @@ friendsRouter.post(
     friendsController.rejectFriendRequest
 );
 
+// LIST OWN REQUESTS
+friendsRouter.get(
+    "/sent_requests",
+    authenticateJWT,
+    friendsController.getAllFriendRequests
+);
+
 module.exports = friendsRouter;
