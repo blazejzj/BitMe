@@ -1,6 +1,6 @@
 export {};
+import db from "../db/index";
 const { body } = require("express-validator");
-const db = require("../db/index");
 
 // EMAIL REGISTRATION
 const emailAlreadyExistsMsg = "An account with this email already exists.";
@@ -35,6 +35,7 @@ exports.validateUserRegister = [
         .bail()
         .custom(async (email: string) => {
             const exists = await db.user.emailExists(email);
+            console.log("before check here");
             if (exists) {
                 return Promise.reject(emailAlreadyExistsMsg);
             }

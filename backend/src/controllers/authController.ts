@@ -20,7 +20,6 @@ exports.registerUser = [
             const err = errors.array({ onlyFirstError: true });
             return res.status(400).json({ msg: err[0].msg });
         }
-
         const { email, password, username, displayName, photoUrl } = req.body;
         const hashedPassword = await bcrypt.hash(password, 10);
 
