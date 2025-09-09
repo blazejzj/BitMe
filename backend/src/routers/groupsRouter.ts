@@ -8,4 +8,18 @@ const { authenticateJWT } = require("../middleware/authMiddleware");
 
 const groupsController = require("../controllers/groupsController");
 
-groupsRouter.post("create");
+// CREATE NEW GROUP
+groupsRouter.post(
+    "/create",
+    authenticateJWT,
+    requireRegisteredUser,
+    groupsController.createGroup
+);
+
+// DELETE GROUP
+groupsRouter.delete(
+    "/delete/:id",
+    authenticateJWT,
+    requireRegisteredUser,
+    groupsController.deleteGroup
+);
