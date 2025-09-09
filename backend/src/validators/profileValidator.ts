@@ -1,6 +1,6 @@
 export {};
+import db from "../db/index";
 const { body } = require("express-validator");
-const { db } = require("../db/index");
 import { Request } from "express";
 
 // EMAIL UPDATE

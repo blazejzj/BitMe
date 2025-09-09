@@ -1,7 +1,8 @@
 export {};
 import { randomUUID } from "crypto";
 
-const db = require("../db/index");
+import db from "../db/index";
+import { Role } from "../types/Role";
 const jwt = require("jsonwebtoken");
 const bcrypt = require("bcryptjs");
 
@@ -19,7 +20,6 @@ exports.registerUser = [
             const err = errors.array({ onlyFirstError: true });
             return res.status(400).json({ msg: err[0].msg });
         }
-
         const { email, password, username, displayName, photoUrl } = req.body;
         const hashedPassword = await bcrypt.hash(password, 10);
 
@@ -72,7 +72,7 @@ exports.loginGuest = async (req: any, res: any) => {
         username: randomUUID(),
         displayName: randomGuestDisplayName(),
         photoUrl: null,
-        role: "GUEST",
+        role: Role.GUEST,
     };
 
     const hashedGuestPassword = await bcrypt.hash(payload.password, 10);
@@ -116,6 +116,7 @@ exports.login = [
 
         const { email, password } = req.body;
         const user = await db.user.getUserByEmail(email);
+        if (!user) return res.status(401).json({ msg: wrongCredentialsErr });
         const passwordMatch = await bcrypt.compare(password, user.password);
 
         if (!user || !passwordMatch)

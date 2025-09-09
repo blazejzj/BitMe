@@ -1,4 +1,4 @@
-const db = require("../db/index");
+import db from "../db/index";
 
 exports.blockUser = async (req: any, res: any) => {
     const user = req.user;

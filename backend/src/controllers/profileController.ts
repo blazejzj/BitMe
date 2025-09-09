@@ -1,6 +1,6 @@
 export {};
 const { validationResult } = require("express-validator");
-const db = require("../db/index");
+import db from "../db/index";
 const bcrypt = require("bcryptjs");
 const { validateProfileUpdate } = require("../validators/profileValidator");
 
