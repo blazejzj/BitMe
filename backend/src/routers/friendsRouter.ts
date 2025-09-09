@@ -1,6 +1,6 @@
 import { requireRegisteredUser } from "../middleware/guestMiddleware";
-
 export {};
+
 const { Router } = require("express");
 const friendsRouter = Router();
 const { authenticateJWT } = require("../middleware/authMiddleware");

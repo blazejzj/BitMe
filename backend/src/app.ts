@@ -34,6 +34,7 @@ app.use(cors(corsOptions));
 app.use("/api/auth", authRouter);
 app.use("/api/profile", profileRouter);
 app.use("/api/connections", friendsRouter);
+// app.use("/api/groups");
 
 // listen
 const port = process.env.PORT || 4000;
