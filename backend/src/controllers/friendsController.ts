@@ -1,21 +1,7 @@
-import { User } from "@prisma/client";
-
 const db = require("../db/index");
 
-const isUserGuest = (user: User) => {
-    if (user.role === "GUEST") return true;
-    return false;
-};
-
 exports.blockUser = async (req: any, res: any) => {
-    // if user is just a GUEST (not logged in) we deny the request
     const user = req.user;
-    if (isUserGuest(user)) {
-        return res
-            .status(403)
-            .json({ msg: "Couldn't handle request. Please make an account." });
-    }
-
     const blockedUserId = req.params.id;
 
     const found = await db.userConnections.isBlocked(user.id, blockedUserId);
@@ -32,14 +18,7 @@ exports.blockUser = async (req: any, res: any) => {
 };
 
 exports.unblockUser = async (req: any, res: any) => {
-    // if user is just a GUEST (not logged in) we deny the request
     const user = req.user;
-    if (isUserGuest(user)) {
-        return res
-            .status(403)
-            .json({ msg: "Couldn't handle request. Please make an account." });
-    }
-
     const blockedUserId = req.params.id;
 
     const found = await db.userConnections.isBlocked(user.id, blockedUserId);
@@ -60,13 +39,7 @@ exports.unblockUser = async (req: any, res: any) => {
 };
 
 exports.getBlockedUsers = async (req: any, res: any) => {
-    // if user is just a GUEST (not logged in) we deny the request
     const user = req.user;
-    if (isUserGuest(user)) {
-        return res
-            .status(403)
-            .json({ msg: "Couldn't handle request. Please make an account." });
-    }
 
     const blockedUsers = await db.userConnections.getBlockedUsers(user.id);
     return res.status(200).json({
@@ -75,14 +48,7 @@ exports.getBlockedUsers = async (req: any, res: any) => {
 };
 
 exports.sendFriendRequest = async (req: any, res: any) => {
-    // if user is just a GUEST (not logged in) we deny the request
     const user = req.user;
-    if (isUserGuest(user)) {
-        return res
-            .status(403)
-            .json({ msg: "Couldn't handle request. Please make an account." });
-    }
-
     const friendUserId = req.params.id;
 
     if (user.id === friendUserId) {
@@ -130,15 +96,9 @@ exports.sendFriendRequest = async (req: any, res: any) => {
 };
 
 exports.getAllFriendRequests = async (req: any, res: any) => {
-    // if user is just a GUEST (not logged in) we deny the request
-    const user = req.user;
-    if (isUserGuest(user)) {
-        return res
-            .status(403)
-            .json({ msg: "Couldn't handle request. Please make an account." });
-    }
+    const userId = req.user.id;
     const requests = await db.userConnections.getAllActiveFriendRequests(
-        user.id
+        userId
     );
     res.status(200).json({
         msg: "Successfully fetched all friends requests.",
@@ -147,14 +107,7 @@ exports.getAllFriendRequests = async (req: any, res: any) => {
 };
 
 exports.removeFriendRequest = async (req: any, res: any) => {
-    // if user is just a GUEST (not logged in) we deny the request
     const user = req.user;
-    if (isUserGuest(user)) {
-        return res
-            .status(403)
-            .json({ msg: "Couldn't handle request. Please make an account." });
-    }
-
     const friendUserId = req.params.id;
 
     const removed = await db.userConnections.removeFriendRequest(
@@ -170,14 +123,7 @@ exports.removeFriendRequest = async (req: any, res: any) => {
 };
 
 exports.acceptFriendRequest = async (req: any, res: any) => {
-    // if user is just a GUEST (not logged in) we deny the request
     const user = req.user;
-    if (isUserGuest(user)) {
-        return res
-            .status(403)
-            .json({ msg: "Couldn't handle request. Please make an account." });
-    }
-
     const friendUserId = req.params.id;
 
     const exists = await db.userConnections.isRequestActive(
@@ -197,14 +143,7 @@ exports.acceptFriendRequest = async (req: any, res: any) => {
 };
 
 exports.rejectFriendRequest = async (req: any, res: any) => {
-    // if user is just a GUEST (not logged in) we deny the request
     const user = req.user;
-    if (isUserGuest(user)) {
-        return res
-            .status(403)
-            .json({ msg: "Couldn't handle request. Please make an account." });
-    }
-
     const friendUserId = req.params.id;
 
     const removed = await db.userConnections.rejectFriendRequest(
@@ -220,14 +159,7 @@ exports.rejectFriendRequest = async (req: any, res: any) => {
 };
 
 exports.removeFriend = async (req: any, res: any) => {
-    // if user is just a GUEST (not logged in) we deny the request
     const user = req.user;
-    if (isUserGuest(user)) {
-        return res
-            .status(403)
-            .json({ msg: "Couldn't handle request. Please make an account." });
-    }
-
     const friendUserId = req.params.id;
 
     const areFriends = await db.userConnections.isFriend(user.id, friendUserId);
@@ -242,29 +174,13 @@ exports.removeFriend = async (req: any, res: any) => {
 };
 
 exports.getFriends = async (req: any, res: any) => {
-    // if user is just a GUEST (not logged in) we deny the request
-    const user = req.user;
-    if (isUserGuest(user)) {
-        return res
-            .status(403)
-            .json({ msg: "Couldn't handle request. Please make an account." });
-    }
-
-    const friends = await db.userConnections.getFriends(user.id);
+    const userId = req.user.id;
+    const friends = await db.userConnections.getFriends(userId);
     return res.status(200).json({ friends });
 };
 
 exports.getIncomingFriendRequests = async (req: any, res: any) => {
-    // if user is just a GUEST (not logged in) we deny the request
-    const user = req.user;
-    if (isUserGuest(user)) {
-        return res
-            .status(403)
-            .json({ msg: "Couldn't handle request. Please make an account." });
-    }
-
-    const requests = await db.userConnections.getIncomingFriendRequests(
-        user.id
-    );
+    const userId = req.user.id;
+    const requests = await db.userConnections.getIncomingFriendRequests(userId);
     return res.status(200).json({ requests });
 };
