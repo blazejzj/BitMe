@@ -9,5 +9,8 @@
         "skipLibCheck": true
     },
     "exclude": ["dist"],
-    "include": ["src", "src/types/**/*.d.ts"]
+    "include": ["src", "src/types/**/*.d.ts"],
+    "ts-node": {
+        "files": true
+    }
 }
