@@ -36,13 +36,30 @@ exports.deleteGroup = async (req: Request, res: Response) => {
     return res.status(200).json({ msg: "Successfully deleted group" });
 };
 
-exports.getAllUserGroups = (req: Request, res: Response) => {
+exports.getAllUserGroups = async (req: Request, res: Response) => {
     const userId = req.user!.id;
 
-    const groups = db.groups.getAllUsersGroups(userId);
+    const groups = await db.groups.getAllUsersGroups(userId);
 
-    return res.json(200).json({
+    return res.status(200).json({
         msg: "Successfully fetched all user's groups.",
         groups,
+    });
+};
+
+exports.getSpecificUserGroup = async (req: Request, res: Response) => {
+    const userId = req.user!.id;
+    const { groupId } = req.params;
+
+    const membership = await db.groups.getSpecificUserGroup(groupId, userId);
+    if (!membership) {
+        return res.status(404).json({
+            msg: "Provide correct group id",
+        });
+    }
+
+    return res.status(200).json({
+        msg: "Successfully fetched group.",
+        membership,
     });
 };

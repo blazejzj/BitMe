@@ -16,6 +16,14 @@ groupsRouter.get(
     groupsController.getAllUserGroups
 );
 
+// GET SPECIFIC GROUP USER IS PART OF
+groupsRouter.get(
+    "/:id",
+    authenticateJWT,
+    requireRegisteredUser,
+    groupsController.getSpecificUserGroup
+);
+
 // CREATE NEW GROUP
 groupsRouter.post(
     "/create",

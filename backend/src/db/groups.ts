@@ -40,9 +40,17 @@ async function getAllUsersGroups(userId: string) {
     });
 }
 
+async function getSpecificUserGroup(groupId: string, userId: string) {
+    return prisma.groupMember.findUnique({
+        where: { groupId_userId: { groupId, userId } },
+        include: { group: true },
+    });
+}
+
 export default {
     createNewGroup,
     deleteGroup,
     userOwnsGroup,
     getAllUsersGroups,
+    getSpecificUserGroup,
 };
