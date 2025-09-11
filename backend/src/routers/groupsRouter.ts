@@ -23,3 +23,5 @@ groupsRouter.delete(
     requireRegisteredUser,
     groupsController.deleteGroup
 );
+
+module.exports = groupsRouter;

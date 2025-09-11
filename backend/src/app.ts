@@ -7,6 +7,7 @@ const passportConfig = require("./config/configurePassport");
 const authRouter = require("./routers/authRouter");
 const profileRouter = require("./routers/profileRouter");
 const friendsRouter = require("./routers/friendsRouter");
+const groupsRouter = require("./routers/groupsRouter");
 
 require("dotenv").config();
 
@@ -34,7 +35,7 @@ app.use(cors(corsOptions));
 app.use("/api/auth", authRouter);
 app.use("/api/profile", profileRouter);
 app.use("/api/connections", friendsRouter);
-// app.use("/api/groups");
+app.use("/api/groups", groupsRouter);
 
 // listen
 const port = process.env.PORT || 4000;
