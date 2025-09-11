@@ -31,8 +31,18 @@ async function userOwnsGroup(groupId: string, userId: string) {
     return !!exists;
 }
 
+async function getAllUsersGroups(userId: string) {
+    return prisma.groupMember.findMany({
+        where: { userId },
+        include: {
+            group: true,
+        },
+    });
+}
+
 export default {
     createNewGroup,
     deleteGroup,
     userOwnsGroup,
+    getAllUsersGroups,
 };

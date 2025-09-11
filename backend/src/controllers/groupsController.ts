@@ -35,3 +35,14 @@ exports.deleteGroup = async (req: Request, res: Response) => {
 
     return res.status(200).json({ msg: "Successfully deleted group" });
 };
+
+exports.getAllUserGroups = (req: Request, res: Response) => {
+    const userId = req.user!.id;
+
+    const groups = db.groups.getAllUsersGroups(userId);
+
+    return res.json(200).json({
+        msg: "Successfully fetched all user's groups.",
+        groups,
+    });
+};
